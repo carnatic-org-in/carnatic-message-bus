@@ -13,8 +13,7 @@ async function callRaagaAPI(message, channel) {
         path: '',
         method: '',
         headers: {
-          'Content-Type': 'application/json',
-          'Content-Length': postData.length
+          'Content-Type': 'application/json'
         }
       };
       if(configuration.RAAGA_API_VERSION) {
