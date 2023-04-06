@@ -14,7 +14,8 @@ async function callRaagaAPI(message, channel) {
         path: '',
         method: '',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Accept-Language':''
         }
       };
       if(configuration.RAAGA_API_VERSION) {
@@ -22,7 +23,7 @@ async function callRaagaAPI(message, channel) {
       }else{
         options.path = messageObj.URI;
       }
-      
+      options.headers['Accept-Language'] = messageObj.acceptlanguage;
       options.method = messageObj.Method;
       const request = http.request(options, (response) => {
         console.log("Successful "+ response);
