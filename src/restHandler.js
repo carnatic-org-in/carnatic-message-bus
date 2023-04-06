@@ -2,8 +2,9 @@ const http = require('http');
 const configuration = require('./utils/config.js');
 
 async function callRaagaAPI(message, channel) {
-    var messageObj = JSON.parse(message.content.toString());
-    let postData = JSON.stringify(
+    try{
+        var messageObj = JSON.parse(message.content.toString());
+        let postData = JSON.stringify(
         messageObj.Payload
       );
       
@@ -35,6 +36,10 @@ async function callRaagaAPI(message, channel) {
       
       request.write(postData);
       request.end();
+    }catch(error){
+      console.error(error);
+    }
+    
 }
 module.exports = {
     callRaagaAPI 

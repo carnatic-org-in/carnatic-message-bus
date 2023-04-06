@@ -8,6 +8,7 @@ async function startListening() {
     const queueName = 'raaga-queue';
   
     const connect = async () => {
+      console.info("Connecting to queue ", queueName);
       try {
         connection = await amqp.connect(`amqps://${configuration.AMQ_USER_NAME}:${configuration.AMQ_PASSWORD}@puffin.rmq2.cloudamqp.com/zsmnsmyd`);
         channel = await connection.createChannel();
@@ -15,7 +16,12 @@ async function startListening() {
   
         channel.consume(queueName, (message) => {
           console.log(`Received message: ${message.content.toString()}`);
-          restAPI.callRaagaAPI(message, channel);
+          try{
+            restAPI.callRaagaAPI(message, channel);
+          }catch(error){
+            console.error("Error ", error);
+          }
+          
         });
   
         channel.on('close', (err) => {
